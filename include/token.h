@@ -1,5 +1,6 @@
-#include<bits/stdc++.h>
-using namespace std;
+#pragma once
+
+#include<string>
 
 enum class TokenType {
     LET,
@@ -31,6 +32,6 @@ enum class TokenType {
 
 struct Token{
     TokenType type;
-    string lexeme;
+    std::string lexeme;
     int line;
 };
