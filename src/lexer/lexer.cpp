@@ -17,7 +17,15 @@ std::vector<Token> createTokens(std::string s){
             tokens.push_back(Token{TokenType::NUMBER, digit, 1});
             i--;
         }
-        else if(isalpha(s[i])
+        else if(std::isalpha(static_cast<unsigned char>(s[i]))){
+            std::string identifier;
+            while(i<s.length() && (std::isalnum(static_cast<unsigned char>(s[i])) || s[i] == '_')){
+                identifier+=s[i];
+                i++;
+            }
+            tokens.push_back(Token{TokenType::IDENTIFIER, identifier,1});
+            i--;
+        }
     }
     return tokens;
 }
