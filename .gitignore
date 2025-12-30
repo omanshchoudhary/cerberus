@@ -1,0 +1,74 @@
+# Build artifacts
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+build/
+dist/
+out/
+
+# Compiled files
+*.out
+*.app
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Dependencies
+node_modules/
+vendor/
+libs/
+
+# Temporary files
+*.tmp
+*.log
+*.pid
+
+# Security & Credentials
+.env
+.env.local
+.env.*.local
+secrets/
+*.pem
+*.key
+*.p12
+.credentials
+config.local.js
+private.json
+
+# OS files
+.DS_Store
+Thumbs.db
+.directory
+
+# Backups
+*.bak
+*.backup
+*.orig
+
+# Coverage
+coverage/
+*.gcov
+*.gcda
+*.gcno
+
+# Debug
+.gdb_history
+*.dSYM/
