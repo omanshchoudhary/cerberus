@@ -1,4 +1,4 @@
-# Cerberus 🐺
+# Cerberus 
 
 Cerberus is a custom interpreted programming language built in C++, inspired by the three-headed guardian of the underworld.
 
