@@ -1,4 +1,5 @@
 #include "../../include/parser/parser.h"
+#include "../../include/ast/expr.h"
 
 Parser::Parser(const std::vector<Token>& tokens): tokens(tokens) {}
 
@@ -17,4 +18,56 @@ const Token& Parser::previous() const {
 const Token& Parser::advance() {
     if (!isAtEnd()) current++;
     return previous();
+}
+
+bool Parser::check(TokenType type) const {
+    if(isAtEnd()) return false;
+    return peek().type==type;
+}
+
+bool Parser::match(TokenType type){
+    if(check(type)){
+        advance();
+        return true;    
+    }
+    return false;
+}
+
+Expr* Parser::factor(){
+    if(match(TokenType::NUMBER)){
+        int value = std::stoi(previous().lexeme);
+        return new LiteralExpr(value);
+    }
+    if(match(TokenType::IDENTIFIER)){
+        return new VariableExpr(previous().lexeme);
+    }
+    if (match(TokenType::LPAREN)) {
+        Expr* expr = expression();
+        match(TokenType::RPAREN);
+        return expr;
+    }
+
+    return nullptr;
+}
+
+Expr* Parser::term(){
+    Expr* expr = factor();
+
+    while(match(TokenType::STAR)){
+        TokenType op = previous().type;
+        Expr* right = factor();
+        expr= new BinaryExpr(expr, op, right);
+    }
+    return expr;
+}
+
+Expr* Parser::expression(){
+    Expr* expr = term();
+    while(match(TokenType::PLUS)){
+        TokenType op = previous().type;
+        Expr* right = term();
+        expr = new BinaryExpr(expr, op, right);
+    }
+
+    return expr;
 }

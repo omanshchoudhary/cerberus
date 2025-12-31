@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "../token.h"
+#include "../ast/expr.h"
 
 class Parser
 {
@@ -15,4 +16,9 @@ private:
     const Token& peek() const;
     const Token& previous() const;
     const Token& advance();
+    bool check(TokenType type) const;
+    bool match(TokenType type);
+    Expr* expression();
+    Expr* term();
+    Expr* factor();
 };
