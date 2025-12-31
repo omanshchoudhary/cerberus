@@ -1,4 +1,11 @@
-#include<bits/stdc++.h>
-using namespace std;
+#include "../../include/parser/parser.h"
 
-string code ="x count 10 42";
+int main() {
+    // assume lexer already produced tokens
+    std::vector<Token> tokens = /* your lexer output for "10 + 2 * 3" */;
+
+    Parser parser(tokens);
+    Expr* expr = parser.expression();
+
+    printExpr(expr);
+}
