@@ -3,11 +3,13 @@
 #include <vector>
 #include "../token.h"
 #include "../ast/expr.h"
+#include "../ast/stmt.h"
 
 class Parser
 {
 public:
     explicit Parser(const std::vector<Token> &tokens);
+    Stmt* parseStatement();
 
 private:
     const std::vector<Token> &tokens;
@@ -21,4 +23,7 @@ private:
     Expr* expression();
     Expr* term();
     Expr* factor();
+    Stmt* letStatement();
+    Stmt* printStatement();
+
 };

@@ -1,6 +1,6 @@
 #include "../../include/parser/parser.h"
 #include "../../include/ast/expr.h"
-
+#include <stdexcept>  
 Parser::Parser(const std::vector<Token>& tokens): tokens(tokens) {}
 
 bool Parser::isAtEnd() const {
@@ -70,4 +70,51 @@ Expr* Parser::expression(){
     }
 
     return expr;
+}
+
+Stmt* Parser::parseStatement(){
+    if(match(TokenType::LET)){
+        return letStatement();
+    }
+    if(match(TokenType::PRINT)){
+        return printStatement();
+    }
+    return nullptr;
+}
+
+Stmt* Parser::letStatement(){
+    if (!match(TokenType::IDENTIFIER)) {
+        throw std::runtime_error("Expected variable name after 'let'");
+    }
+
+    std::string name = previous().lexeme;
+
+    if (!match(TokenType::EQUAL)) {
+        throw std::runtime_error("Expected '=' after variable name");
+    }
+
+    Expr* initializer = expression();
+
+    if (!match(TokenType::SEMICOLON)) {
+        throw std::runtime_error("Expected ';' after expression");
+    }
+
+    return new LetStmt(name, initializer);
+}
+
+Stmt* Parser::printStatement(){
+    if(!match(TokenType::LPAREN)){
+        throw std::runtime_error("Expected '(' after 'print'");
+    }
+    Expr* value = expression();
+
+    if(!match(TokenType::RPAREN)){
+        throw std::runtime_error("Expected ')'");
+    }
+
+    if (!match(TokenType::SEMICOLON)) {
+        throw std::runtime_error("Expected ';' after print statement");
+    }
+
+    return new PrintStmt(value);
 }
