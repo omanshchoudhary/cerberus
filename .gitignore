@@ -29,7 +29,7 @@ out/
 CMakeFiles/
 CMakeCache.txt
 cmake_install.cmake
-Makefile
+
 
 # Dependencies
 node_modules/

@@ -1,11 +1,18 @@
-#include "../../include/parser/parser.h"
+#include <iostream>
+#include "./include/ast/expr.h"
+#include "./include/token.h"
+#include "./include/interpreter/interpreter.h"
 
 int main() {
-    // assume lexer already produced tokens
-    std::vector<Token> tokens = /* your lexer output for "10 + 2 * 3" */;
-
-    Parser parser(tokens);
-    Expr* expr = parser.expression();
-
-    printExpr(expr);
+    Expr* expr = new BinaryExpr(
+        new LiteralExpr(10),
+        TokenType::PLUS,
+        new BinaryExpr(
+            new LiteralExpr(2),
+            TokenType::STAR,
+            new LiteralExpr(3)
+        )
+    );
+    std::cout<<evaluate(expr);
+    return 0;
 }
