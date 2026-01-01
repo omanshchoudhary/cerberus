@@ -2,14 +2,20 @@
 #include "include/ast/expr.h"
 #include "include/token.h"
 #include "include/interpreter/interpreter.h"
+#include "include/lexer/lexer.h"
+#include "include/parser/parser.h"
 
 int main() {
-    defineVariable("x", 5);
-    Expr* expr = new BinaryExpr(
-        new VariableExpr("x"),
-        TokenType::PLUS,
-        new LiteralExpr(3)
-    );
-    std::cout <<evaluate(expr);
+    std::string source = "let x = 10 + 2 * 3; print(x);";
+
+    auto tokens = createTokens(source);
+    Parser parser(tokens);
+
+    Stmt* stmt1 = parser.parseStatement();
+    Stmt* stmt2 = parser.parseStatement();
+
+    execute(stmt1);
+    execute(stmt2);
+
     return 0;
 }

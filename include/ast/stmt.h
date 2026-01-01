@@ -16,5 +16,5 @@ struct LetStmt : Stmt {
 struct PrintStmt : Stmt {
     Expr* expression;
     
-    explicit PrintStmt(Expr* expression) : expression(expression);
+    explicit PrintStmt(Expr* expression) : expression(expression){}
 };

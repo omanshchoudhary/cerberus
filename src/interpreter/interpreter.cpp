@@ -2,6 +2,7 @@
 #include<stdexcept>
 #include "../../include/interpreter/interpreter.h"
 #include "../../include/token.h"
+#include<iostream>
 
 static std::unordered_map<std::string, int> environment;
 
@@ -34,4 +35,20 @@ int evaluate(Expr* expr){
     }
     throw std::runtime_error("Unknown expression type");
 
+}
+
+
+void execute(Stmt* stmt){
+    if(auto* letStmt = dynamic_cast<LetStmt*>(stmt)){
+        int value = evaluate(letStmt->initializer);
+        defineVariable(letStmt->name, value);
+        return;
+    }
+    if(auto* printStmt = dynamic_cast<PrintStmt*>(stmt)){
+        int value = evaluate(printStmt->expression);
+        std::cout<<value<<std::endl;
+        return;
+    }
+
+    throw std::runtime_error("Unknown statement type");
 }

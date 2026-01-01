@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include "../../include/token.h"
 #include<iostream>
+#include "../../include/lexer/lexer.h"
 
 static const std::unordered_map<std::string, TokenType> keywords = {
     {"let", TokenType::LET},
@@ -28,9 +29,9 @@ static const std::unordered_map<char, TokenType> operators = {
 };
 
 
-std::vector<Token> createTokens(std::string s){
+std::vector<Token> createTokens(const std::string& s){
     std::vector<Token> tokens;
-    for(int i =0;i<s.length();i++){
+    for(size_t i =0;i<s.length();i++){
         if(s[i]==' ') continue;
         else if(std::isdigit(static_cast<unsigned char>(s[i]))){
             std::string digit;
@@ -71,10 +72,4 @@ std::vector<Token> createTokens(std::string s){
         }
     }
     return tokens;
-}
-
-int main(){
-    auto tokens = createTokens("let my_var 42 print while");
-    std::cout << tokens[3].lexeme;
-    return 0;
 }
