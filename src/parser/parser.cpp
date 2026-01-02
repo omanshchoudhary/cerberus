@@ -53,7 +53,7 @@ Expr* Parser::factor(){
 Expr* Parser::term(){
     Expr* expr = factor();
 
-    while(match(TokenType::STAR)){
+    while(match(TokenType::STAR) || match(TokenType::SLASH)){
         TokenType op = previous().type;
         Expr* right = factor();
         expr= new BinaryExpr(expr, op, right);
@@ -62,14 +62,7 @@ Expr* Parser::term(){
 }
 
 Expr* Parser::expression(){
-    Expr* expr = term();
-    while(match(TokenType::PLUS)){
-        TokenType op = previous().type;
-        Expr* right = term();
-        expr = new BinaryExpr(expr, op, right);
-    }
-
-    return expr;
+    return comparison();
 }
 
 Stmt* Parser::parseStatement(){
@@ -117,4 +110,29 @@ Stmt* Parser::printStatement(){
     }
 
     return new PrintStmt(value);
+}
+Expr* Parser::comparison() {
+    Expr* expr = additive();
+
+    while (match(TokenType::LESS) ||
+           match(TokenType::GREATER) ||
+           match(TokenType::EQUAL_EQUAL)) {
+        TokenType op = previous().type;
+        Expr* right = additive();
+        expr = new BinaryExpr(expr, op, right);
+    }
+
+    return expr;
+}
+
+Expr* Parser::additive() {
+    Expr* expr = term();
+
+    while (match(TokenType::PLUS) || match(TokenType::MINUS)) {
+        TokenType op = previous().type;
+        Expr* right = term();
+        expr = new BinaryExpr(expr, op, right);
+    }
+
+    return expr;
 }

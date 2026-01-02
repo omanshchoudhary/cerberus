@@ -25,7 +25,8 @@ enum class TokenType {
     LBRACE,
     RBRACE,
     SEMICOLON,
-
+    SLASH,
+    
     EOF_TOKEN
 
 };

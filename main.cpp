@@ -6,7 +6,7 @@
 #include "include/parser/parser.h"
 
 int main() {
-    std::string source = "let x = 10 + 2 * 3; print(x);";
+    std::string source = "print(5 > 3); print(5 == 2);";
 
     auto tokens = createTokens(source);
     Parser parser(tokens);

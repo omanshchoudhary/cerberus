@@ -25,5 +25,7 @@ private:
     Expr* factor();
     Stmt* letStatement();
     Stmt* printStatement();
+    Expr* comparison();
+    Expr* additive();
 
 };
