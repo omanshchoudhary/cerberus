@@ -71,5 +71,6 @@ std::vector<Token> createTokens(const std::string& s){
             }
         }
     }
+    tokens.push_back(Token{TokenType::EOF_TOKEN, "", 1});
     return tokens;
 }

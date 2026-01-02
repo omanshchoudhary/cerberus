@@ -1,6 +1,7 @@
 #include "../../include/parser/parser.h"
 #include "../../include/ast/expr.h"
 #include <stdexcept>  
+
 Parser::Parser(const std::vector<Token>& tokens): tokens(tokens) {}
 
 bool Parser::isAtEnd() const {
@@ -135,4 +136,12 @@ Expr* Parser::additive() {
     }
 
     return expr;
+}
+
+std::vector<Stmt*> Parser::parseProgram(){
+    std::vector<Stmt*> statements;
+    while(!isAtEnd()){
+        statements.push_back(parseStatement());
+    }
+    return statements;
 }
