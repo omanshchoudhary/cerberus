@@ -44,7 +44,9 @@ Expr* Parser::factor(){
     }
     if (match(TokenType::LPAREN)) {
         Expr* expr = expression();
-        match(TokenType::RPAREN);
+        if (!match(TokenType::RPAREN)) {
+            throw std::runtime_error("Expected ')' after expression");
+        }
         return expr;
     }
 
