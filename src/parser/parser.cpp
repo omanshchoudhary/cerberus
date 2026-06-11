@@ -48,7 +48,7 @@ Expr* Parser::factor(){
         return expr;
     }
 
-    return nullptr;
+    throw std::runtime_error("Expected expression but got '" + peek().lexeme + "'");
 }
 
 Expr* Parser::term(){
