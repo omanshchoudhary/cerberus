@@ -18,6 +18,7 @@ static const std::unordered_map<char, TokenType> operators = {
     {'+', TokenType::PLUS},
     {'-', TokenType::MINUS},
     {'*', TokenType::STAR},
+    {'/', TokenType::SLASH},
     {'<', TokenType::LESS},
     {'>', TokenType::GREATER},
     {'(', TokenType::LPAREN},
