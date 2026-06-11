@@ -69,6 +69,15 @@ coverage/
 *.gcda
 *.gcno
 
+# Personal notes
+learnings.txt
+
 # Debug
 .gdb_history
 *.dSYM/
+
+# Compiled binaries
+cerberus
+test_cerberus
+test_features
+src/lexer/lexer
