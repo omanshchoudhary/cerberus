@@ -1,6 +1,7 @@
 #include <vector>
 #include <string>
 #include <cctype>
+#include <stdexcept>
 #include <unordered_map>
 #include "../../include/token.h"
 #include<iostream>
@@ -69,6 +70,10 @@ std::vector<Token> createTokens(const std::string& s){
                 else{
                     tokens.push_back(Token{operators.at(symbol), std::string(1, symbol), 1});
                 } 
+            }
+            // Invalid characters to be thrown as error and not skipped 
+            else {
+                throw std::runtime_error(std::string("Unknown character: ") + symbol);
             }
         }
     }
