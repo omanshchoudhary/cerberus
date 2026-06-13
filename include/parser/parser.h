@@ -11,6 +11,7 @@ public:
     explicit Parser(const std::vector<Token> &tokens);
     Stmt* parseStatement();
     std::vector<Stmt*> parseProgram();
+    
 
 private:
     const std::vector<Token> &tokens;
@@ -28,6 +29,6 @@ private:
     Stmt* printStatement();
     Expr* comparison();
     Expr* additive();
+    Stmt* blockStatement();
     
-
 };

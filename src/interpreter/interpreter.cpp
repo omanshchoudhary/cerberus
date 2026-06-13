@@ -68,6 +68,14 @@ void execute(Stmt *stmt)
         std::cout << value << std::endl;
         return;
     }
+    if (auto *blockStmt = dynamic_cast<BlockStmt *>(stmt))
+    {
+        for (Stmt *statement : blockStmt->statements)
+        {
+            execute(statement);
+        }
+        return;
+    }
 
     throw std::runtime_error("Unknown statement type");
 }

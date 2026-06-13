@@ -26,6 +26,8 @@ struct PrintStmt : Stmt
 struct BlockStmt : Stmt
 {
     std::vector<Stmt *> statements;
+
+    explicit BlockStmt(std::vector<Stmt *> statements) : statements(statements) {}
 };
 
 struct IfStmt : Stmt
@@ -33,10 +35,15 @@ struct IfStmt : Stmt
     Expr *condition;
     Stmt *thenBranch;
     Stmt *elseBranch;
+
+    IfStmt(Expr *condition, Stmt *thenBranch, Stmt *elseBranch)
+        : condition(condition), thenBranch(thenBranch), elseBranch(elseBranch) {}
 };
 
 struct WhileStmt : Stmt
 {
     Expr *condition;
     Stmt *body;
+
+    WhileStmt(Expr *condition, Stmt *body) : condition(condition), body(body) {}
 };

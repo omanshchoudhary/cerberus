@@ -1,5 +1,6 @@
 #include "../../include/parser/parser.h"
 #include "../../include/ast/expr.h"
+#include <climits>
 #include <stdexcept>  
 
 Parser::Parser(const std::vector<Token>& tokens): tokens(tokens) {}
@@ -75,6 +76,9 @@ Stmt* Parser::parseStatement(){
     if(match(TokenType::PRINT)){
         return printStatement();
     }
+    if(match(TokenType::LBRACE)){
+        return blockStatement();
+    }
     return nullptr;
 }
 
@@ -114,6 +118,19 @@ Stmt* Parser::printStatement(){
 
     return new PrintStmt(value);
 }
+
+Stmt* Parser::blockStatement(){
+    std::vector<Stmt*> statements;
+    
+    while(!match(TokenType::RBRACE)){
+        if(isAtEnd()){
+            throw std::runtime_error("Expected '}' after block");
+        }
+        statements.push_back(parseStatement());
+    }
+    return new BlockStmt(statements);
+}   
+
 Expr* Parser::comparison() {
     Expr* expr = additive();
 
@@ -147,3 +164,4 @@ std::vector<Stmt*> Parser::parseProgram(){
     }
     return statements;
 }
+
