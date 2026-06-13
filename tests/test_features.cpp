@@ -1,9 +1,9 @@
 #include <iostream>
-#include "include/ast/expr.h"
-#include "include/token.h"
-#include "include/interpreter/interpreter.h"
-#include "include/lexer/lexer.h"
-#include "include/parser/parser.h"
+#include "../include/ast/expr.h"
+#include "../include/token.h"
+#include "../include/interpreter/interpreter.h"
+#include "../include/lexer/lexer.h"
+#include "../include/parser/parser.h"
 
 void testFeature(const std::string& name, const std::string& code) {
     std::cout << "\n=== Testing " << name << " ===" << std::endl;
