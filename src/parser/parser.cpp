@@ -50,7 +50,7 @@ Expr* Parser::factor(){
         return expr;
     }
 
-    throw std::runtime_error("Expected expression but got '" + peek().lexeme + "'");
+    throw std::runtime_error("Expected expression but got '" + peek().lexeme + "' on line " + std::to_string(peek().line));
 }
 
 Expr* Parser::term(){
