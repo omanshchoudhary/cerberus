@@ -86,6 +86,10 @@ Stmt* Parser::parseStatement(){
     if(match(TokenType::WHILE)){
         return whileStatement();
     }
+    
+    if(match(TokenType::IDENTIFIER)){
+        return assignStatement();
+    }
     return nullptr;
 }
 
@@ -168,6 +172,22 @@ Stmt* Parser::whileStatement(){
 
     body=parseStatement();
     return new WhileStmt(condition, body);
+}
+
+Stmt* Parser::assignStatement(){
+    std::string name = previous().lexeme;
+
+    if(!match(TokenType::EQUAL)){
+        throw std::runtime_error("Expected '=' after variable name");
+    }
+
+    Expr* value = expression();
+
+    if(!match(TokenType::SEMICOLON)){
+        throw std::runtime_error("Expected ';' after assignment");
+    }
+
+    return new AssignStmt(name, value);
 }
 
 Expr* Parser::comparison() {

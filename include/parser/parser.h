@@ -32,4 +32,5 @@ private:
     Stmt* blockStatement();
     Stmt* ifStatement();
     Stmt* whileStatement();
+    Stmt* assignStatement();
 };

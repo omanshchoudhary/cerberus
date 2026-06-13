@@ -6,3 +6,4 @@
 int evaluate(Expr* expr);
 void execute(Stmt* stmt);
 void defineVariable(const std::string& name, int value);
+void assignVariable(const std::string& name, int value);

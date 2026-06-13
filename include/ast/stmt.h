@@ -47,3 +47,11 @@ struct WhileStmt : Stmt
 
     WhileStmt(Expr *condition, Stmt *body) : condition(condition), body(body) {}
 };
+
+struct AssignStmt : Stmt
+{
+    std::string name;
+    Expr *value;
+
+    AssignStmt(const std::string &name, Expr *value) : name(name), value(value) {}
+};

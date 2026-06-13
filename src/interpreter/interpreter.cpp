@@ -11,6 +11,15 @@ void defineVariable(const std::string &name, int value)
     environment[name] = value;
 }
 
+void assignVariable(const std::string &name, int value)
+{
+    if (environment.find(name) == environment.end())
+    {
+        throw std::runtime_error("Undefined variable: " + name);
+    }
+    environment[name] = value;
+}
+
 int evaluate(Expr *expr)
 {
     if (auto *literal = dynamic_cast<LiteralExpr *>(expr))
@@ -97,5 +106,14 @@ void execute(Stmt *stmt)
         return;
     }
 
+    if (auto *assignStmt = dynamic_cast<AssignStmt *>(stmt))
+    {
+        assignVariable(assignStmt->name, evaluate(assignStmt->value));
+        return;
+    }
+    
+
+
     throw std::runtime_error("Unknown statement type");
 }
+
