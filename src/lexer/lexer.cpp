@@ -34,7 +34,7 @@ static const std::unordered_map<char, TokenType> operators = {
 std::vector<Token> createTokens(const std::string& s){
     std::vector<Token> tokens;
     for(size_t i =0;i<s.length();i++){
-        if(s[i]==' ') continue;
+        if(std::isspace(static_cast<unsigned char>(s[i]))) continue;
         else if(std::isdigit(static_cast<unsigned char>(s[i]))){
             std::string digit;
             while(i<s.length() && std::isdigit(static_cast<unsigned char>(s[i]))){
