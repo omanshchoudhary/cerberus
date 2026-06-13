@@ -1,23 +1,20 @@
-#include <unordered_map>
 #include <stdexcept>
 #include "../../include/interpreter/interpreter.h"
+#include "../../include/interpreter/environment.h"
 #include "../../include/token.h"
 #include <iostream>
 
-static std::unordered_map<std::string, int> environment;
+static Environment globalEnv;
+static Environment *currentEnv = &globalEnv;
 
 void defineVariable(const std::string &name, int value)
 {
-    environment[name] = value;
+    currentEnv->define(name, value);
 }
 
 void assignVariable(const std::string &name, int value)
 {
-    if (environment.find(name) == environment.end())
-    {
-        throw std::runtime_error("Undefined variable: " + name);
-    }
-    environment[name] = value;
+    currentEnv->assign(name, value);
 }
 
 int evaluate(Expr *expr)
@@ -53,12 +50,7 @@ int evaluate(Expr *expr)
     }
     if (auto *variable = dynamic_cast<VariableExpr *>(expr))
     {
-        auto it = environment.find(variable->name);
-        if (it == environment.end())
-        {
-            throw std::runtime_error("Undefined variable: " + variable->name);
-        }
-        return it->second;
+        return currentEnv->get(variable->name);
     }
     throw std::runtime_error("Unknown expression type");
 }
@@ -79,10 +71,14 @@ void execute(Stmt *stmt)
     }
     if (auto *blockStmt = dynamic_cast<BlockStmt *>(stmt))
     {
+        Environment *previous = currentEnv;
+        Environment blockEnv(previous);
+        currentEnv = &blockEnv;
         for (Stmt *statement : blockStmt->statements)
         {
             execute(statement);
         }
+        currentEnv = previous;
         return;
     }
     if (auto *ifStmt = dynamic_cast<IfStmt *>(stmt))
