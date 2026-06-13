@@ -1,7 +1,6 @@
 #include "../../include/parser/parser.h"
 #include "../../include/ast/expr.h"
-#include <climits>
-#include <stdexcept>  
+#include <stdexcept>
 
 Parser::Parser(const std::vector<Token>& tokens): tokens(tokens) {}
 
@@ -79,6 +78,14 @@ Stmt* Parser::parseStatement(){
     if(match(TokenType::LBRACE)){
         return blockStatement();
     }
+
+    if(match(TokenType::IF)){
+        return ifStatement();
+    }
+
+    if(match(TokenType::WHILE)){
+        return whileStatement();
+    }
     return nullptr;
 }
 
@@ -131,6 +138,38 @@ Stmt* Parser::blockStatement(){
     return new BlockStmt(statements);
 }   
 
+Stmt* Parser::ifStatement(){
+    Expr *condition;
+    Stmt *thenBranch;
+    Stmt *elseBranch = nullptr;
+    if(match(TokenType::LPAREN)){
+        condition= expression();
+        if(!match(TokenType::RPAREN)){
+            throw std::runtime_error("Expected ')' after if condition");
+        }
+    } else throw std::runtime_error("Expected '(' after 'if'");
+    thenBranch = parseStatement();
+    if(match(TokenType::ELSE)){
+        elseBranch=parseStatement();
+    }
+    return new IfStmt(condition,thenBranch,elseBranch);
+    
+}
+
+Stmt* Parser::whileStatement(){
+    Expr *condition;
+    Stmt *body;
+    if(match(TokenType::LPAREN)){
+        condition= expression();
+        if(!match(TokenType::RPAREN)){
+            throw std::runtime_error("Expected ')' after while condition");
+        }
+    } else throw std::runtime_error("Expected '(' after 'while'");
+
+    body=parseStatement();
+    return new WhileStmt(condition, body);
+}
+
 Expr* Parser::comparison() {
     Expr* expr = additive();
 
@@ -164,4 +203,5 @@ std::vector<Stmt*> Parser::parseProgram(){
     }
     return statements;
 }
+
 

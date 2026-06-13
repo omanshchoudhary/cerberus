@@ -30,5 +30,6 @@ private:
     Expr* comparison();
     Expr* additive();
     Stmt* blockStatement();
-    
+    Stmt* ifStatement();
+    Stmt* whileStatement();
 };

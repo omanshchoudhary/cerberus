@@ -76,6 +76,26 @@ void execute(Stmt *stmt)
         }
         return;
     }
+    if (auto *ifStmt = dynamic_cast<IfStmt *>(stmt))
+    {
+        if (evaluate(ifStmt->condition))
+        {
+            execute(ifStmt->thenBranch);
+        }
+        else if (ifStmt->elseBranch != nullptr)
+        {
+            execute(ifStmt->elseBranch);
+        }
+        return;
+    }
+    if (auto *whileStmt = dynamic_cast<WhileStmt *>(stmt))
+    {
+        while (evaluate(whileStmt->condition))
+        {
+            execute(whileStmt->body);
+        }
+        return;
+    }
 
     throw std::runtime_error("Unknown statement type");
 }
