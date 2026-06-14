@@ -25,12 +25,14 @@ int main() {
     testFeature("Arithmetic", "let x = 10 + 5 * 2; print(x);");
     testFeature("Comparison", "let x = 10; print(x > 5);");
     testFeature("Parentheses", "let x = (10 + 5) * 2; print(x);");
-    
-    std::cout << "\n=== Testing Unimplemented Features ===" << std::endl;
-    testFeature("If Statement", "let x = 10; if (x > 5) { print(x); }");
-    testFeature("While Loop", "let x = 0; while (x < 3) { print(x); let x = x + 1; }");
     testFeature("Division", "let x = 10 / 2; print(x);");
+    testFeature("If Statement", "let x = 10; if (x > 5) { print(x); }");
+    testFeature("While Loop", "let x = 0; while (x < 3) { print(x); x = x + 1; }");
+    testFeature("Reassignment", "let x = 1; x = x + 4; print(x);");
+    testFeature("Block Scoping", "let x = 1; { let x = 2; print(x); } print(x);");
+
+    std::cout << "\n=== Testing Unsupported Features (expected to error) ===" << std::endl;
     testFeature("Strings", "print(\"Hello World\");");
-    
+
     return 0;
 }
